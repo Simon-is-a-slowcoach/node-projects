@@ -5,12 +5,15 @@
   "main": "./bin/www",
   "scripts": {
     "start": "node .",
+    "migrate": "./node_modules/.bin/knex migrate:latest",
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-session": "^1.16.1",
     "knex": "^0.16.5",
     "morgan": "~1.9.0",
     "pg": "^7.9.0"
