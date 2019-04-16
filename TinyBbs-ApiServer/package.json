@@ -2,13 +2,17 @@
   "name": "tinybbs-apiserver",
   "version": "0.0.0",
   "private": true,
+  "main": "./bin/www",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node .",
+    "test": "echo 'Error: no test specified' && exit 1"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
-    "morgan": "~1.9.0"
+    "knex": "^0.16.5",
+    "morgan": "~1.9.0",
+    "pg": "^7.9.0"
   }
 }
