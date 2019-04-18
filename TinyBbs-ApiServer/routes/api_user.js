@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const basicAuth = require('basic-auth');
 const User = require('../models/user.js');
 
 router.post('/signup', (req, res, next) => {
@@ -50,4 +51,23 @@ router.get('/signout', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res, next) => {
+    User.getByUid(req.params.id, (err, user) => {
+        if (err) return next(err);
+        if (!user || !user.id) return res.sendStatus(404);
+        res.send({
+            data: {
+                user: user.toJSON(),
+            },
+        });
+    });
+});
+
 module.exports = router;
+module.exports.auth = (req, res, next) => {
+    const { name: username, pass: password } = basicAuth(req);
+    User.authenticate(username, password, (err, user) => {
+        if (user) req.remoteUser = user;
+        next(err);
+    });
+};

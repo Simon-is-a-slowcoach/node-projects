@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
         if (err) return next(err);
         if (!user || !user.id) return next(new Error('wrong uid'));
         req.user = user; //TODO req.locals.user?
-        console.log(`session user: ${req.user && req.user.id}, ${new Date()}`);
+        // console.log(`session user: ${req.user && req.user.id}, ${new Date()}`);
         next();
     });
 };

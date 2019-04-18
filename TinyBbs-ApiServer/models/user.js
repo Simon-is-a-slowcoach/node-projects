@@ -135,6 +135,7 @@ class User {
         return {
             id: this.id,
             username: this.username,
+            avatar: this.avatar,
             bio: this.bio,
         };
     }

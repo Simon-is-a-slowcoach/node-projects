@@ -22,5 +22,8 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api', apiRouter.userRouter.auth);
+app.use(user);
+
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
