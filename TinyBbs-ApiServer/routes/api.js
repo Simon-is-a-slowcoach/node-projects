@@ -1,9 +1,11 @@
-const express = require('express');
-const router = express.Router();
+const apiUser = require('./api_user.js');
 
-const apiUserRouter = require('./api_user.js');
+exports.auth = apiUser.auth;
 
-router.use('/user', apiUserRouter);
-
-module.exports = router;
-module.exports.userRouter = apiUserRouter;
+// user api
+exports.mapUserApis = (app) => {
+    app.post('/api/user/signup', apiUser.signup);
+    app.post('/api/user/signin', apiUser.signin);
+    app.get('/api/user/signout', apiUser.signout);
+    app.get('/api/user/:id', apiUser.get);
+};

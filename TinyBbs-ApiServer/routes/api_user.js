@@ -1,9 +1,7 @@
-const express = require('express');
-const router = express.Router();
 const basicAuth = require('basic-auth');
 const User = require('../models/user.js');
 
-router.post('/signup', (req, res, next) => {
+module.exports.signup = (req, res, next) => {
     const { username, password } = req.body;
     User.createNewData(username, password, (err, user) => {
         if (err) {
@@ -18,9 +16,9 @@ router.post('/signup', (req, res, next) => {
             },
         });
     });
-});
+};
 
-router.post('/signin', (req, res) => {
+module.exports.signin = (req, res) => {
     const { username, password } = req.body;
     User.authenticate(username, password, (err, user) => {
         if (err) {
@@ -42,16 +40,16 @@ router.post('/signin', (req, res) => {
             },
         });
     });
-});
+};
 
-router.get('/signout', (req, res) => {
+module.exports.signout = (req, res) => {
     req.session.destroy((err) => {
         if (err) throw err;
         res.status(200).send({ message: '退出成功' });
     });
-});
+};
 
-router.get('/:id', (req, res, next) => {
+module.exports.get = (req, res, next) => {
     User.getByUid(req.params.id, (err, user) => {
         if (err) return next(err);
         if (!user || !user.id) return res.sendStatus(404);
@@ -61,9 +59,8 @@ router.get('/:id', (req, res, next) => {
             },
         });
     });
-});
+};
 
-module.exports = router;
 module.exports.auth = (req, res, next) => {
     const { name: username, pass: password } = basicAuth(req);
     User.authenticate(username, password, (err, user) => {

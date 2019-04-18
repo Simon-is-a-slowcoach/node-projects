@@ -9,7 +9,7 @@ const logger = require('morgan');
 const user = require('./middleware/user.js');
 
 const indexRouter = require('./routes/index.js');
-const apiRouter = require('./routes/api.js');
+const api = require('./routes/api.js');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,8 +22,8 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', apiRouter.userRouter.auth);
+app.use('/api', api.auth);
 app.use(user);
 
 app.use('/', indexRouter);
-app.use('/api', apiRouter);
+api.mapUserApis(app);
