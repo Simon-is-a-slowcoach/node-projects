@@ -2,11 +2,14 @@
   "name": "TinyBbs-ApiServer-ts",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/bin/www",
+  "main": "./built/bin/www",
   "scripts": {
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "prestart": "npm run build",
     "start": "node .",
-    "dev": "./node_modules/.bin/nodemon bin/www",
-    "prd": "pm2 start bin/www",
+    "dev": "./node_modules/.bin/nodemon ./built/app.js",
+    "prd": "pm2 start ./built/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -19,10 +22,21 @@
     "koa-onerror": "^1.2.1",
     "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
-    "koa-views": "^5.2.1",
-    "pug": "^2.0.0-rc.1"
+    "koa-views": "^5.2.1"
   },
   "devDependencies": {
-    "nodemon": "^1.8.1"
+    "@types/debug": "^4.1.4",
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.2",
+    "@types/koa-convert": "^1.2.2",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.0.40",
+    "@types/koa-static": "^4.0.1",
+    "@types/koa-views": "^2.0.3",
+    "@types/node": "^11.13.7",
+    "nodemon": "^1.8.1",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
   }
 }
