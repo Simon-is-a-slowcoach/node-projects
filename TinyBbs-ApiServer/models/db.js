@@ -1,6 +1,9 @@
-const knex = require('knex');
-const dbconfig = require('../knexfile.js');
+exports.connect = () => {
+    const app = require('../app.js');
+    const knex = require('knex');
+    const dbconfig = require('../knexfile.js');
+    return knex(dbconfig[app.get('env')]);
+};
 
-const db = knex(dbconfig[require('../app.js').get('env')]);
-
-module.exports = db;
+exports.userTable = 'users';
+exports.topicTable = 'topics';

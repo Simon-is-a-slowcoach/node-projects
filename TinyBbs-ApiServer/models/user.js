@@ -1,7 +1,6 @@
 const db = require('./db.js');
+const userTable = db.userTable;
 const bcrypt = require('bcryptjs');
-
-const tbUsers = 'users';
 
 class User {
     constructor(obj) {
@@ -19,7 +18,7 @@ class User {
                 if (err) {
                     return cb(err);
                 }
-                db(tbUsers)
+                db.connect()(userTable)
                     .insert(this).returning('id')
                     .then(idArray => {
                         if (idArray.length != 1) return cb(new Error('insert falied'));
@@ -33,11 +32,11 @@ class User {
     }
 
     update(cb) {
-        //TODO check id and username ? username should not be changed?
         cb = cb || (() => { });
         const id = this.id;
-        db(tbUsers)
-            .where({ id: id })
+        const username = this.username; // username should not be changed?
+        db.connect()(userTable)
+            .where({ id: id, username: username })
             .update(this)
             .catch(err => {
                 return cb(err);
@@ -57,8 +56,9 @@ class User {
     static getByUsername(username, cb) {
         cb = cb || (() => { });
         if (!username) return cb(new Error('username required'));
-        db.select()
-            .from(tbUsers)
+        db.connect()
+            .select()
+            .from(userTable)
             .where({ username: username }).then(value => {
                 switch (value.length) {
                     case 0:
@@ -76,12 +76,13 @@ class User {
             });
     }
 
-    static getByUid(uid, cb) {
+    static getById(id, cb) {
         cb = cb || (() => { });
-        if (!uid) return cb(new Error('uid required'));
-        db.select()
-            .from(tbUsers)
-            .where({ id: uid }).then(value => {
+        if (!id) return cb(new Error('id required'));
+        db.connect()
+            .select()
+            .from(userTable)
+            .where({ id: id }).then(value => {
                 switch (value.length) {
                     case 0:
                         cb(null, null);// TODO: or throw an error?
@@ -128,7 +129,7 @@ class User {
             });
         });
     }
-
+    
     // TODO method to clone object except some fields
     // 去掉敏感数据(比如password)
     toJSON() {

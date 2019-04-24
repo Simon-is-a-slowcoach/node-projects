@@ -50,7 +50,7 @@ module.exports.signout = (req, res) => {
 };
 
 module.exports.get = (req, res, next) => {
-    User.getByUid(req.params.id, (err, user) => {
+    User.getById(req.params.id, (err, user) => {
         if (err) return next(err);
         if (!user || !user.id) return res.sendStatus(404);
         res.send({

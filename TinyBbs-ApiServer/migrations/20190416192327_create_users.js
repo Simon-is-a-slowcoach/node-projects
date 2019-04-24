@@ -1,4 +1,4 @@
-const tableName = 'users';
+const tableName = require('../models/db.js').userTable;
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable(tableName, table => {
