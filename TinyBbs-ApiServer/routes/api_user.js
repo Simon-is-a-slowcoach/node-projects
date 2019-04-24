@@ -62,9 +62,16 @@ module.exports.get = (req, res, next) => {
 };
 
 module.exports.auth = (req, res, next) => {
-    const { name: username, pass: password } = basicAuth(req);
-    User.authenticate(username, password, (err, user) => {
-        if (user) req.remoteUser = user;
-        next(err);
-    });
+    const authResult = basicAuth(req);
+    const couldAuth = authResult && authResult.name && authResult.pass;
+    if (!couldAuth) {
+        next();
+    } else {
+        // auth
+        const { name: username, pass: password } = basicAuth(req);
+        User.authenticate(username, password, (err, user) => {
+            if (user) req.remoteUser = user;
+            next(err);
+        });
+    }
 };

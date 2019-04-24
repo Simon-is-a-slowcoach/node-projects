@@ -1,6 +1,6 @@
 const db = require('./db.js');
 const userTable = db.userTable;
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 class User {
     constructor(obj) {
@@ -129,7 +129,7 @@ class User {
             });
         });
     }
-    
+
     // TODO method to clone object except some fields
     // 去掉敏感数据(比如password)
     toJSON() {
