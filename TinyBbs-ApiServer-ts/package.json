@@ -2,8 +2,9 @@
   "name": "TinyBbs-ApiServer-ts",
   "version": "0.1.0",
   "private": true,
+  "main": "./src/bin/www",
   "scripts": {
-    "start": "node bin/www",
+    "start": "node .",
     "dev": "./node_modules/.bin/nodemon bin/www",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
