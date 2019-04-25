@@ -34,7 +34,9 @@
     "@types/koa-router": "^7.0.40",
     "@types/koa-static": "^4.0.1",
     "@types/koa-views": "^2.0.3",
+    "@types/mongoose": "^5.3.26",
     "@types/node": "^11.13.7",
+    "mongoose": "^5.5.3",
     "nodemon": "^1.8.1",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5"

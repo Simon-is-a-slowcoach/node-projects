@@ -1,0 +1,15 @@
+{
+    "development": {
+        "uris": "mongodb://dbuser:password@localhost:27017/tinybbsdb",
+        "options": {
+            "useNewUrlParser": true
+        }
+    },
+    "production": {
+        "uris": null,
+        "options": {
+            "useNewUrlParser": true,
+            "autoIndex": false
+        }
+    }
+}

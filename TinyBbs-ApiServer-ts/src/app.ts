@@ -1,5 +1,4 @@
 import Koa from "koa";
-const app = new Koa();
 // import views = require("koa-views");
 import json = require("koa-json");
 import onerror = require("koa-onerror");
@@ -8,6 +7,9 @@ import logger = require("koa-logger");
 
 import index from "./routes/index";
 import api from "./routes/api";
+import connectDb from "./models/dbConnector";
+
+const app = new Koa();
 
 // error handler
 onerror(app);
@@ -38,5 +40,8 @@ app.use(api.allowedMethods());
 app.on("error", (err, ctx) => {
   console.error("server error", err, ctx);
 });
+
+// database(mongoose)
+connectDb(app);
 
 export = app;
