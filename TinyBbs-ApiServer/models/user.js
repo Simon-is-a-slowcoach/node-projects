@@ -45,7 +45,7 @@ class User {
 
     hashPassword(cb) {
         cb = cb || (() => { });
-        if (!cb) return cb(new Error('empty password'));
+        if (!this.password) return cb(new Error('empty password'));
         bcrypt.hash(this.password, 12, (err, hash) => {
             if (err) return cb(err);
             this.password = hash;

@@ -7,6 +7,7 @@ function connectDb(app: Koa) {
     const currDbConfig = dbConfig[currEnv as string];
 
     mongoose.connect(currDbConfig.uris, currDbConfig.options);
+    mongoose.set("useCreateIndex", true);
 
     // connected event
     mongoose.connection.on("connected", () => {

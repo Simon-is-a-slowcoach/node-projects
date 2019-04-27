@@ -25,6 +25,7 @@
     "koa-views": "^5.2.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/debug": "^4.1.4",
     "@types/koa": "^2.0.48",
     "@types/koa-bodyparser": "^4.2.2",
@@ -36,6 +37,7 @@
     "@types/koa-views": "^2.0.3",
     "@types/mongoose": "^5.3.26",
     "@types/node": "^11.13.7",
+    "bcryptjs": "^2.4.3",
     "mongoose": "^5.5.3",
     "nodemon": "^1.8.1",
     "tslint": "^5.16.0",
