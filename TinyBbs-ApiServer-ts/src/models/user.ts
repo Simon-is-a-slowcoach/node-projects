@@ -51,6 +51,8 @@ UserSchema.statics.authenticate = async (username: string, password: string) => 
     return matched ? user : null;
 };
 
+// TODO: change to be static method? (can deal with JSON obj and User obj)
+// 去掉敏感数据(比如password)
 UserSchema.methods.toJSON = function() {
     return {
         id: this.id,

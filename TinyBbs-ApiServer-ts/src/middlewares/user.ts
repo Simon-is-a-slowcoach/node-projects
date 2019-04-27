@@ -1,5 +1,6 @@
 import User from "../models/user";
 import { RouterContext } from "koa-router";
+import auth from "basic-auth";
 
 function getSessionUid(ctx: RouterContext) {
     return ctx.session ? ctx.session.uid : null;
@@ -11,7 +12,26 @@ async function getCtxUser(userId: number) {
     return user ? user.toJSON() : null;
 }
 
-export default async function sessionUser(ctx: RouterContext, next: () => Promise<any>) {
+// get user json object
+async function getCtxRemoteUser(username: string, password: string) {
+    const user = await User.authenticate(username, password);
+    return user ? user.toJSON() : null;
+}
+
+export async function basicAuthUser(ctx: RouterContext, next: () => Promise<any>) {
+    const authResult = auth(ctx.req);
+    const couldAuth = authResult && authResult.name && authResult.pass;
+    if (couldAuth) {
+        const { name: username, pass: password } = authResult;
+        const user = await getCtxRemoteUser(username, password);
+        // console.log(`basic-auth with user: ${user.username}`);
+        ctx.remoteUser = user;
+    }
+    await next();
+    ctx.remoteUser = null;
+}
+
+export async function sessionUser(ctx: RouterContext, next: () => Promise<any>) {
     const uidStart = getSessionUid(ctx);
     if (uidStart && !ctx.user) {
         if (!ctx.user) {

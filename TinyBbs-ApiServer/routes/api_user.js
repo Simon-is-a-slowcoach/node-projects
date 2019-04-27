@@ -68,7 +68,7 @@ module.exports.auth = (req, res, next) => {
         next();
     } else {
         // auth
-        const { name: username, pass: password } = basicAuth(req);
+        const { name: username, pass: password } = authResult;
         User.authenticate(username, password, (err, user) => {
             if (user) req.remoteUser = user;
             next(err);

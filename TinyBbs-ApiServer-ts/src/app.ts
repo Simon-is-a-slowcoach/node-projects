@@ -6,7 +6,7 @@ import bodyparser = require("koa-bodyparser");
 import logger = require("koa-logger");
 import session from "koa-session";
 
-import sessionUser from "./middlewares/user";
+import { sessionUser } from "./middlewares/user";
 
 import index from "./routes/index";
 import api from "./routes/api";

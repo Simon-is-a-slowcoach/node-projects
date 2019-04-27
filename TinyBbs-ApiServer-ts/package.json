@@ -25,6 +25,7 @@
     "koa-views": "^5.2.1"
   },
   "devDependencies": {
+    "@types/basic-auth": "^1.1.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/debug": "^4.1.4",
     "@types/koa": "^2.0.48",
@@ -38,6 +39,7 @@
     "@types/koa-views": "^2.0.3",
     "@types/mongoose": "^5.3.26",
     "@types/node": "^11.13.7",
+    "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "koa-session": "^5.10.1",
     "mongoose": "^5.5.3",
