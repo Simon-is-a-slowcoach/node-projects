@@ -4,6 +4,9 @@ import json = require("koa-json");
 import onerror = require("koa-onerror");
 import bodyparser = require("koa-bodyparser");
 import logger = require("koa-logger");
+import session from "koa-session";
+
+import sessionUser from "./middlewares/user";
 
 import index from "./routes/index";
 import api from "./routes/api";
@@ -22,6 +25,20 @@ app.use(json());
 app.use(logger());
 app.use((require("koa-static"))(__dirname + "/public"));
 
+// session middleware
+app.keys = ["some secret hurr"];
+const sessionConfig = {
+  key: "koa:sess",
+  maxAge: 86400000,
+  autoCommit: true,
+  overwrite: true,
+  httpOnly: true,
+  signed: true,
+  rolling: false,
+  renew: false,
+};
+app.use(session(sessionConfig, app));
+
 // logger
 app.use(async (ctx, next) => {
   const start = new Date();
@@ -29,6 +46,8 @@ app.use(async (ctx, next) => {
   const ms = +(new Date()) - +start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
+
+app.use(sessionUser);
 
 // routes
 app.use(index.routes());
