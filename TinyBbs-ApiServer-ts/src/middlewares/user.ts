@@ -6,16 +6,14 @@ function getSessionUid(ctx: RouterContext) {
     return ctx.session ? ctx.session.uid : null;
 }
 
-// get user json object
 async function getCtxUser(userId: number) {
     const user = await User.findByUserId(userId);
-    return user ? user.toJSON() : null;
+    return user || null;
 }
 
-// get user json object
 async function getCtxRemoteUser(username: string, password: string) {
     const user = await User.authenticate(username, password);
-    return user ? user.toJSON() : null;
+    return user || null;
 }
 
 export async function basicAuthUser(ctx: RouterContext, next: () => Promise<any>) {
