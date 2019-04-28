@@ -3,6 +3,13 @@ import { RouterContext } from "koa-router";
 
 export async function signup(ctx: RouterContext, next: () => Promise<any>) {
     const { username, password } = ctx.request.body;
+    if (!username || !password) {
+        ctx.status = 403;
+        ctx.body = {
+            message: "username and password required",
+        };
+        return;
+    }
     const user = await new User({ username, password }).save();
     ctx.session.uid = user.id;
     ctx.body = {
@@ -14,6 +21,13 @@ export async function signup(ctx: RouterContext, next: () => Promise<any>) {
 
 export async function signin(ctx: RouterContext, next: () => Promise<any>) {
     const { username, password } = ctx.request.body;
+    if (!username || !password) {
+        ctx.status = 403;
+        ctx.body = {
+            message: "username and password required",
+        };
+        return;
+    }
     const matchedUser = await User.authenticate(username, password);
     if (matchedUser) {
         ctx.session.uid = matchedUser.id;

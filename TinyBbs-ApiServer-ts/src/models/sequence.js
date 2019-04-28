@@ -21,19 +21,12 @@ SequenceSchema.statics.increment = function(schemaName, callback) {
 const Sequence = mongoose.model("Sequence", SequenceSchema);
 
 exports.Sequence = Sequence;
-exports.preSaveSelfIncreasingId = function(schema, modelName, idField) {
-    schema.pre("save", function(next) {
-        const self = this;
-        if (self.isNew) {
-            Sequence.increment(modelName, (err, result) => {
-                if (err) {
-                    throw err;
-                }
-                self[idField] = result.value.next;
-                next();
-            });
-        } else {
-            next();
+exports.assignIncreasingId = function(modelName, obj, idField, next) {
+    Sequence.increment(modelName, (err, result) => {
+        if (err) {
+            throw err;
         }
+        obj[idField] = result.value.next;
+        next();
     });
 };

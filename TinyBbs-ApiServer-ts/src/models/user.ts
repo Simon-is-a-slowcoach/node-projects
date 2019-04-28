@@ -1,5 +1,5 @@
-import { preSaveSelfIncreasingId } from "./sequence";
-import { Schema, Document, Model, model } from "mongoose";
+import { assignIncreasingId } from "./sequence";
+import { Schema, Model, model } from "mongoose";
 import { IUserDocument } from "./interfaces/IUserDocument";
 import * as bcrypt from "bcryptjs";
 import { _clonedObjectWithoutProperties } from "./utils";
@@ -25,7 +25,14 @@ const UserSchema = new Schema({
 const modelName = "User";
 
 // self increasing id
-preSaveSelfIncreasingId(UserSchema, modelName, "id");
+UserSchema.pre("save", function(next) {
+    const self = this;
+    if (self.isNew) {
+        assignIncreasingId(modelName, self, "id", next);
+    } else {
+        next();
+    }
+});
 
 // password
 UserSchema.path("password").set((v: string) => {

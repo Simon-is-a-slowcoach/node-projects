@@ -9,7 +9,7 @@ import session from "koa-session";
 import { sessionUser } from "./middlewares/user";
 
 import index from "./routes/index";
-import api from "./routes/api";
+import apis from "./routes/apis";
 import connectDb from "./models/dbConnector";
 
 const app = new Koa();
@@ -52,8 +52,8 @@ app.use(sessionUser);
 // routes
 app.use(index.routes());
 app.use(index.allowedMethods());
-app.use(api.routes());
-app.use(api.allowedMethods());
+app.use(apis.routes());
+app.use(apis.allowedMethods());
 
 // error-handling
 app.on("error", (err, ctx) => {
