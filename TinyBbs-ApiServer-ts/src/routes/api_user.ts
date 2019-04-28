@@ -1,13 +1,11 @@
 import User from "../models/user";
 import { RouterContext } from "koa-router";
+import makeResp from "./utils";
 
 export async function signup(ctx: RouterContext, next: () => Promise<any>) {
     const { username, password } = ctx.request.body;
     if (!username || !password) {
-        ctx.status = 403;
-        ctx.body = {
-            message: "username and password required",
-        };
+        makeResp(ctx, 403, "username and password required");
         return;
     }
     const user = await new User({ username, password }).save();
@@ -22,10 +20,7 @@ export async function signup(ctx: RouterContext, next: () => Promise<any>) {
 export async function signin(ctx: RouterContext, next: () => Promise<any>) {
     const { username, password } = ctx.request.body;
     if (!username || !password) {
-        ctx.status = 403;
-        ctx.body = {
-            message: "username and password required",
-        };
+        makeResp(ctx, 403, "username and password required");
         return;
     }
     const matchedUser = await User.authenticate(username, password);
@@ -37,9 +32,8 @@ export async function signin(ctx: RouterContext, next: () => Promise<any>) {
             }
         };
     } else {
-        ctx.status = 401;
+        makeResp(ctx, 401, "invalid username or password");
         ctx.session.uid = null;
-        ctx.body = { message: "invalid username or password" };
     }
 }
 

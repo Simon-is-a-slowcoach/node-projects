@@ -2,6 +2,7 @@ import Router from "koa-router";
 const router = new Router();
 import * as userApi from "./api_user";
 import * as topicApi from "./api_topic";
+import * as commentApi from "./api_comment";
 import { basicAuthUser } from "../middlewares/user";
 
 router.prefix("/api");
@@ -22,5 +23,10 @@ router.get("/user/signout", userApi.signout);
 router.get("/topic/latest", topicApi.latest);
 router.get("/topic/:id", topicApi.get);
 router.post("/topic/create", topicApi.create);
+
+// comment
+router.get("/comment/latest", commentApi.latest);
+router.get("/comment/:id", commentApi.get);
+router.post("/comment/create", commentApi.create);
 
 export default router;

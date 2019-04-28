@@ -21,7 +21,6 @@ TopicSchema.pre("save", function(next) {
     const self = this;
     if (self.isNew) {
         assignIncreasingId(modelName, self, "id", next);
-        (self as ITopicDocument).createdAt = new Date();
     } else {
         next();
     }
